@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from nrarfcn.tables.Table import Table
 
 

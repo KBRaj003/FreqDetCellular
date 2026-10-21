@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from nrarfcn.api.get_frequency import get_frequency
 from nrarfcn.api.get_nrarfcn import get_nrarfcn
 from nrarfcn.api.get_bands_by_frequency import get_bands_by_frequency

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from importlib import import_module
 from os.path import dirname
 from pkgutil import iter_modules

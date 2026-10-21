@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import math
 from kivy.app import App
@@ -5,6 +6,15 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.clock import Clock
 import nrarfcn as nr
+
+import logging
+from kivy.logger import Logger
+
+# Keep only warnings and errors
+logging.basicConfig(level=logging.WARNING)
+Logger.setLevel(logging.WARNING)
+
+
 
 try:
     from jnius import autoclass, cast
@@ -59,7 +69,7 @@ class UI(BoxLayout):
         earfcn, rsrp, v, ang, ppm = 1300, -95.0, 10.0, 45.0, 0.1
         if ANDROID and tm:
             try: rsrp = tm.getSignalStrength().getLevel() * -10.0
-            except Exception: pass
+            except Exception as e: logging.warning('Exception: %s', e, exc_info=True)
         try: nom = nr.get_frequency_by_lte_earfcn(earfcn)
         except Exception: nom = 1815.0
         raw = inst_freq_mhz(nom, v, ang, ppm)

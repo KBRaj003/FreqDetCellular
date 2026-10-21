@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from typing import Optional, Union
 from nrarfcn.api.lte import get_lte_frequency_range, is_lte_band, lte_release
 from nrarfcn.tables import DEFAULT_RELEASE, get_table

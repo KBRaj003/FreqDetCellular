@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from typing import List
 
 from nrarfcn.api.lte import LTE_DEFAULT_RELEASE, frequency_range_contains, get_lte_bands_table, validate_lte_frequency

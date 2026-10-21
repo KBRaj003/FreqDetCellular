@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Table:
     def __init__(self, id: str, release_3gpp: int, ts: str, name: str, header: list, data: list):
         self.id = id

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from typing import Union
 
 from nrarfcn.api.lte import LTE_DEFAULT_RELEASE, get_lte_channel_range

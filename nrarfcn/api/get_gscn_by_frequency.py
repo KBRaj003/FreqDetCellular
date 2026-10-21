@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from nrarfcn.tables import DEFAULT_RELEASE, get_table
 
 

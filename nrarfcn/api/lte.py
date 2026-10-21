@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from typing import Union
 
 from nrarfcn.tables import get_table

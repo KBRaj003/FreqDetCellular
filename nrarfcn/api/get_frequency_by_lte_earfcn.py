@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from nrarfcn.api.lte import LTE_DEFAULT_RELEASE, get_lte_earfcn_table, lte_frequency_for_earfcn, validate_lte_earfcn
 
 
