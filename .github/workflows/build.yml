@@ -1,42 +1,41 @@
 
-name: Build FreqDetCellular APK
+name: Build APK
 on:
-  push:
-    branches: [ main ]
+  push: {branches: [main]}
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
       - name: Verify files
         run: |
-          test -f main.py && echo "main.py OK" || exit 1
-          test -f buildozer.spec && echo "buildozer.spec OK" || exit 1
+          test -f main.py        || { echo "main.py missing"; exit 1; }
+          test -f buildozer.spec || { echo "buildozer.spec missing"; exit 1; }
+          test -d nrarfcn        || { echo "nrarfcn missing"; exit 1; }
+          test -f nrarfcn/__init__.py || { echo "nrarfcn/__init__.py missing"; exit 1; }
+          echo "✓ All required files present"
 
       - name: Set up Python
         uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+        with: {python-version: '3.10'}
 
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y git zip unzip openjdk-17-jdk \
             autoconf libtool pkg-config zlib1g-dev \
-            libncurses5-dev libncursesw5-dev libtinfo5 \
-            cmake libffi-dev libssl-dev
-          pip install --user --upgrade buildozer cython virtualenv
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+            libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
+          sudo apt-get install -y libtinfo5 || echo "libtinfo5 optional"
+          pip install --upgrade buildozer cython virtualenv
 
-      - name: Build with Buildozer
+      - name: Build APK
         run: |
           set -x
-          buildozer -v android debug 2>&1 | tee build.log
-        continue-on-error: true
+          yes | buildozer -v android debug 2>&1 | tee build.log
 
       - name: Upload APK
         if: always()
@@ -46,10 +45,9 @@ jobs:
           path: bin/*.apk
           if-no-files-found: warn
 
-      - name: Upload build log
+      - name: Upload log
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: build-log
           path: build.log
-          if-no-files-found: warn

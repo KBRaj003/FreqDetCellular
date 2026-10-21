@@ -2,3 +2,4 @@ bin/
 .buildozer/
 __pycache__/
 *.pyc
+*.pyo
