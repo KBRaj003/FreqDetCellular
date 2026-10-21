@@ -21,7 +21,7 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v5
-        with: {python-version: '3.10'}
+        with: {python-version: '3.9'}
 
       - name: Install dependencies
         run: |
@@ -29,13 +29,13 @@ jobs:
           sudo apt-get install -y git zip unzip openjdk-17-jdk \
             autoconf libtool pkg-config zlib1g-dev \
             libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
-          sudo apt-get install -y libtinfo5 || echo "libtinfo5 optional"
+          sudo apt-get install -y libtinfo5 || sudo apt-get install -y libtinfo6 || echo "libtinfo5 not available, continuing"
           pip install --upgrade buildozer cython virtualenv
 
       - name: Build APK
         run: |
           set -x
-          yes | buildozer -v android debug 2>&1 | tee build.log
+          buildozer -v android debug 2>&1 | tee build.log
 
       - name: Upload APK
         if: always()
