@@ -17,7 +17,9 @@ jobs:
           test -f buildozer.spec || { echo "buildozer.spec missing"; exit 1; }
           test -d nrarfcn        || { echo "nrarfcn missing"; exit 1; }
           test -f nrarfcn/__init__.py || { echo "nrarfcn/__init__.py missing"; exit 1; }
-          echo "✓ All required files present"
+          grep -E "^android.ndk\s*=\s*(2[5-9]|[3-9][0-9])" buildozer.spec \
+            || { echo "ERROR: NDK version must be >= 25 (27b recommended)"; exit 1; }
+          echo "✓ All required files present, NDK OK"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -29,8 +31,11 @@ jobs:
           sudo apt-get install -y git zip unzip openjdk-17-jdk \
             autoconf libtool pkg-config zlib1g-dev \
             libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
-          sudo apt-get install -y libtinfo5 || sudo apt-get install -y libtinfo6 || echo "libtinfo5 not available, continuing"
+          sudo apt-get install -y libtinfo5 || sudo apt-get install -y libtinfo6 || echo "libtinfo not available, continuing"
           pip install --upgrade buildozer cython virtualenv
+
+      - name: Pre-clean build cache
+        run: rm -rf .buildozer bin
 
       - name: Build APK
         run: |
