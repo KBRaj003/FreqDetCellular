@@ -1,5 +1,6 @@
 
 [app]
+p4a.branch = develop
 title = FreqDetCellular
 package.name = freqdetcellular
 package.domain = org.example
